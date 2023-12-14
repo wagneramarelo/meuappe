@@ -7,9 +7,12 @@ import { signOut} from 'firebase/auth'
 import { auth } from '../../services/firebase';
 
 
+
+
+
+
 function Menu({navigation}) {
 
-    
 // Deslogando um usuário
 async function logout(){
   await signOut (auth)
@@ -21,7 +24,14 @@ async function logout(){
                 });
 }
 
+
+
+
   return (
+
+
+
+
       //Botão no canto superior direito para deslogar usuário - SAIR   
     <View style={styles.backHomeMenu} >
       <View style={styles.homeHeader}>   
@@ -80,10 +90,11 @@ async function logout(){
       </View>
       <View style={styles.btnMenuRow2}>
       <TouchableOpacity style={styles.btnHomeMenu}
-        onPress={() => Settings()}
+        onPress={() => navigation.navigate('AdminSettings') }
       >
         <Ionicons name='settings-sharp' color='#c1c1c1' size={40} />
         <Text style={styles.homeMenuText}>Configurações</Text>
+      
       </TouchableOpacity>
       
       </View>
@@ -117,7 +128,7 @@ function Settings() {
 
 const Tab = createBottomTabNavigator();
 
-export default function Home() {
+ export default function Home() {
 
   return (
     <Tab.Navigator 
@@ -178,7 +189,8 @@ const styles = StyleSheet.create({
     height: 50,
     marginTop: 50,
     flexDirection: 'row',
-    marginBottom: 20
+    marginBottom: 20,
+    paddingEnd: 10
     
   },
   homeTitle:{
