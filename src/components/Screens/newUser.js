@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, Switch, Alert} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../services/firebase';
+//import { createUserWithEmailAndPassword } from 'firebase/auth';
+//import { auth } from '../../services/firebase';
 import { TextInputMask } from 'react-native-masked-text';
 import usuarioService from '../../services/UserService';
 import { Button, Provider, Dialog, Paragraph, Portal } from 'react-native-paper';
@@ -11,7 +11,7 @@ export default function Cadastro({navigation}){
 
 const [nome, setNome] = useState();
 const [email, setEmail] = useState();
-const [input, setInput] = useState(null);
+const [password, setInput] = useState(null);
 const [input2, setInput2] = useState(null);
 const [CPF, setCPF] = useState(null);
 const [telefone, setTelefone] = useState(null);
@@ -77,14 +77,14 @@ const salvar = () => {
     if (validar()){
         setLoading(true)
 
-        if (Register()){
+    //    if (Register()){
 
         let data = {
             name: nome,
             email: email,
-            password: input,
-            phone: telefone,
-            CPF: CPF
+            password: password,
+            cpf: CPF,
+            phone: telefone
         }
 
         usuarioService.cadastrar(data)
@@ -92,19 +92,21 @@ const salvar = () => {
             setLoading (false)
             const title = (response.data.status) ? "Sucesso" : "Erro"
             Alert.alert(title, response.data.mensagem)
-            showDialog()
+            //showDialog()
             console.log(response.data)
             
         })
         .catch((error) => {
             setLoading (false)
-            showDialog()
+            //showDialog()
+            console.log(error)
+            console.log ("Deu algum erro")
            // Alert.alert("Erro", "Houve um erro inesperado")
         })
-    }}
+    }
 }
 
-
+/*
 async function Register(){
         await createUserWithEmailAndPassword(auth, email, input)
         .then(value=>{
@@ -116,10 +118,13 @@ async function Register(){
             .catch(error => console.log(error));
         })
 };
-
+*/
 
 return(
-    <KeyboardAvoidingView style={styles.background}>
+    <KeyboardAvoidingView 
+    behavior={Platform.OS == "ios" ? "padding" : "height"}
+    style={styles.background}>
+        
         <View style={styles.container}>
             <View style={styles.container}>
                 <TextInput
@@ -195,7 +200,7 @@ return(
                         setInput(value)
                         setErrorPass(null)
                     }}
-                    value={input}
+                    value={password}
                     secureTextEntry = {hidePass}
                 />
                 <TouchableOpacity style={styles.icon} onPress={() => setHidePass (!hidePass)}>
