@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Button, Alert, Image, Text, View, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import { Button, Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 
 
-export default function AdminSettings ({navigation}) {
+export default function Spaces ({navigation}) {
 
   
    
@@ -13,7 +13,7 @@ export default function AdminSettings ({navigation}) {
         <View style={styles.backHomeMenu} >
           <View style={styles.homeHeader}>   
                 <Button
-                  onPress={() => navigation.navigate('Home')}
+                  onPress={() => navigation.navigate('AdminSettings')}
                   title="Voltar"
                   color="#3c435c"
                   borderBottomColor= '#737373'
@@ -29,40 +29,27 @@ export default function AdminSettings ({navigation}) {
           
           <View style={styles.btnHomeMessageArea}>
           <TouchableOpacity >
-            <Text style={styles.homeMenuText}>Criar alerta aos condôminos</Text>
+            <Text style={styles.homeMenuText}>Novo Espaço no Condomínio</Text>
           </TouchableOpacity>
           </View>
           <View style={styles.btnMenuRow1}>
               <TouchableOpacity style={styles.btnHomeMenu}
                 //onPress={() => createUser()}
               >
-                <Ionicons name='reader' color='#c1c1c1' size={40} />
-                <Text style={styles.homeMenuText}>Criar comunicados</Text>
+                <Ionicons name='pencil' color='#c1c1c1' size={40} />
+                <Text style={styles.homeMenuText}>Editar já cadastrados</Text>
               </TouchableOpacity>
               
               <TouchableOpacity style={styles.btnHomeMenu}
-                //onPress={() => createUser()}
+                onPress={() => navigation.navigate('Spaces')} 
               >
                 <Ionicons name='today' color='#c1c1c1' size={40} />
-                <Text style={styles.homeMenuText}>Cadastrar Espaços</Text>       
+                <Text style={styles.homeMenuText}>Bloquear Reserva</Text>     
+                 
               </TouchableOpacity>
           
           </View>
-            <View style={styles.btnMenuRow2}>
-          <TouchableOpacity style={styles.btnHomeMenu}
-            //onPress={() => createUser()}
-          >
-            <Ionicons name='person' color='#c1c1c1' size={40} />
-            <Text style={styles.homeMenuText}>Cadastrar Moradores</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnHomeMenu}
-            // onPress={() => createUser()}
-          >
-            <Ionicons name='megaphone' color='#c1c1c1' size={40} />
-            <Text style={styles.homeMenuText}>Cadastrar Conselho</Text>
-          </TouchableOpacity>
           
-          </View>
 
         </View>
       );

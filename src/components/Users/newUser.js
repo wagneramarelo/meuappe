@@ -13,7 +13,7 @@ const [nome, setNome] = useState();
 const [email, setEmail] = useState();
 const [password, setInput] = useState(null);
 const [input2, setInput2] = useState(null);
-const [CPF, setCPF] = useState(null);
+const [cpf, setCPF] = useState(null);
 const [telefone, setTelefone] = useState(null);
 const [isEnabled, setIsEnabled] = useState(false);
 const [hidePass, setHidePass] = useState(true); 
@@ -57,7 +57,7 @@ const validar = () =>{
         setErrorCpf("Preencha seu CPF corretamente")
         console.log("Email errado")
     } 
-    if (CPF == null){
+    if (cpf == null){
         error = true
         setErrorCpf("Preencha o campo CPF")
         console.log("Sem CPF")
@@ -83,7 +83,7 @@ const salvar = () => {
             name: nome,
             email: email,
             password: password,
-            cpf: CPF,
+            cpf: cpf,
             phone: telefone
         }
 
@@ -161,7 +161,7 @@ return(
                     autoCorrect={false}
                     keyboardType="phone-pad"
                     returnKeyType='done'
-                    value={CPF}
+                    value={cpf}
                     onChangeText={value=> {
                         setCPF(value)
                         setErrorCpf(null)

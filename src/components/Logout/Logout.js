@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { signOut} from 'firebase/auth';
 import { auth } from '../../services/firebase';
-import LoginPage from './LoginPage';
+import LoginPage from '../LoginProcess/LoginPage';
 
 
 export default function Logout(){
