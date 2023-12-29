@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, Switch, Alert} from 'react-native';
+import { Button, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, StyleSheet, Switch, Alert} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-//import { createUserWithEmailAndPassword } from 'firebase/auth';
-//import { auth } from '../../services/firebase';
 import { TextInputMask } from 'react-native-masked-text';
 import usuarioService from '../../services/UserService';
-import { Button, Provider, Dialog, Paragraph, Portal } from 'react-native-paper';
+import CustomDialog from '../../util/CustomDialogs';
 
 export default function Cadastro({navigation}){
 
@@ -28,10 +26,21 @@ const [errorPass2, setErrorPass2] = useState(null);
 const [isLoading, setLoading] = useState(false);
 
 // variáveis do Dialog - caixa de mensagem
-const [visible, setVisible] = useState(false);
-const showDialog = () => setVisible(true);
-const hideDialog = () => setVisible(false);
+const [visibleDialog, setVisibleDialog] = useState(true);
+const [title, setTitle] = useState(null);
+const [message, setMessage] = useState(null)
+const [type, setType] = useState(null)
 
+const showDialog = (title, message, type) => {
+    setVisibleDialog(true)
+    setTitle(title)
+    setMessage(message)
+    setType(type)
+}
+
+const hideDialog = (status) => {
+    setVisibleDialog(status)
+} 
 
 let cpfField = null
 
@@ -91,17 +100,15 @@ const salvar = () => {
         .then((response) => { 
             setLoading (false)
             const title = (response.data.status) ? "Sucesso" : "Erro"
-            Alert.alert(title, response.data.mensagem)
-            //showDialog()
+            showDialog(title, response.data.mensagem, "Sucesso")
+            
             console.log(response.data)
             
         })
         .catch((error) => {
             setLoading (false)
-            //showDialog()
             console.log(error)
-            console.log ("Deu algum erro")
-           // Alert.alert("Erro", "Houve um erro inesperado")
+            showDialog("Erro", "Houve um erro inesperado", "Erro")
         })
     }
 }
@@ -246,24 +253,24 @@ return(
             onPress={() => salvar()}
             >
             <Text style={styles.registerText}>Salvar</Text>
+
             </TouchableOpacity>   
    
         </View>
-        <Provider>
-            <Portal>
-                <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Title>Alert</Dialog.Title>
-                        <Dialog.Content>
-                            <Paragraph>This is simple dialog</Paragraph>
-                        </Dialog.Content>
-                    <Dialog.Actions>
-                         <Button onPress={hideDialog}>Done</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>  
-            </Provider> 
+        { visibleDialog &&
+       
+    <CustomDialog title={title} message={message} type={type} visible={visibleDialog} onClose={hideDialog()}>
+     console.log({visibleDialog})
+    </CustomDialog>
+    }
     </KeyboardAvoidingView>
+
 )}
+
+
+
+
+
 
 const styles = StyleSheet.create({
     background:{
@@ -304,7 +311,7 @@ const styles = StyleSheet.create({
     inputEmail: {
         backgroundColor: '#fff',
         width: '90%',
-        marginBottom: 5 ,
+        marginBottom: 2,
         fontSize: 17,
         borderRadius: 7,
         padding: 10,
@@ -314,7 +321,7 @@ const styles = StyleSheet.create({
     inputNome: {
         backgroundColor: '#fff',
         width: '90%',
-        marginBottom: 5 ,
+        marginBottom: 2,
         fontSize: 17,
         borderRadius: 7,
         padding: 10,
